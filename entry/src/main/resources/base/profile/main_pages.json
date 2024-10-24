@@ -1,0 +1,33 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/ui/UI_CommonAttrs",
+    "pages/ui/UI_CommonEvents",
+    "pages/ui/UI_Button",
+    "pages/ui/UI_CheckBox",
+    "pages/ui/UI_DatePicker",
+    "pages/ui/UI_Divider",
+    "pages/ui/UI_Flex",
+    "pages/ui/UI_GridRowGridCol",
+    "pages/ui/UI_Image",
+    "pages/ui/UI_Marquee",
+    "pages/ui/UI_Menu",
+    "pages/ui/UI_Progress",
+    "pages/ui/UI_QRCode",
+    "pages/ui/UI_Rating",
+    "pages/ui/UI_RelativeContainer",
+    "pages/ui/UI_RowColumn",
+    "pages/ui/UI_Search",
+    "pages/ui/UI_Slider",
+    "pages/ui/UI_Stack",
+    "pages/ui/UI_Stepper",
+    "pages/ui/UI_Text",
+    "pages/ui/UI_TextClock",
+    "pages/ui/UI_TextInput_Area",
+    "pages/ui/UI_TextPicker",
+    "pages/ui/UI_TextTimer",
+    "pages/ui/UI_TimePicker",
+    "pages/ui/UI_Toggle",
+    "pages/ui/UI_Select"
+  ]
+}
