@@ -1,10 +1,10 @@
 import { getTitleParams, TitleBar } from '../../components/TitleBar';
+import { bgColor0, bgColor1, bgColor2, bgColor3 } from '../../data/Colors';
 
 @Entry
 @Component
 struct UI_RowColumn {
   @State title: string = '';
-  bgColor: ResourceColor = '#E7E7E7'
   private scroller = new Scroller()
 
   aboutToAppear(): void {
@@ -21,9 +21,9 @@ struct UI_RowColumn {
             Text('Row/Column').padding(10)
             Row({ space: 20 }) {
               Row() {
-                Text().width(30).height(100).backgroundColor(Color.Blue)
-                Text().width(30).height(100).backgroundColor(Color.Red)
-                Text().width(30).height(100).backgroundColor(Color.Gray)
+                Text().width(30).height(100).backgroundColor(bgColor1)
+                Text().width(30).height(100).backgroundColor(bgColor2)
+                Text().width(30).height(100).backgroundColor(bgColor3)
                 Text().width(30).height(100).backgroundColor(Color.Green)
               }
               .justifyContent(FlexAlign.Center)
@@ -31,9 +31,9 @@ struct UI_RowColumn {
               .padding(10)
 
               Column() {
-                Text().width(100).height(25).backgroundColor(Color.Blue)
-                Text().width(100).height(25).backgroundColor(Color.Red)
-                Text().width(100).height(25).backgroundColor(Color.Gray)
+                Text().width(100).height(25).backgroundColor(bgColor1)
+                Text().width(100).height(25).backgroundColor(bgColor2)
+                Text().width(100).height(25).backgroundColor(bgColor3)
                 Text().width(100).height(25).backgroundColor(Color.Green)
               }
               .justifyContent(FlexAlign.Center)
@@ -50,9 +50,9 @@ struct UI_RowColumn {
             Text('Row/Column设置子组件间隔为10').margin({ top: 30 }).padding(10)
             Row({ space: 20 }) {
               Row({ space: 10 }) {
-                Text().width(30).height(130).backgroundColor(Color.Blue)
-                Text().width(30).height(130).backgroundColor(Color.Red)
-                Text().width(30).height(130).backgroundColor(Color.Gray)
+                Text().width(30).height(130).backgroundColor(bgColor1)
+                Text().width(30).height(130).backgroundColor(bgColor2)
+                Text().width(30).height(130).backgroundColor(bgColor3)
                 Text().width(30).height(130).backgroundColor(Color.Green)
               }
               .justifyContent(FlexAlign.Center)
@@ -60,9 +60,9 @@ struct UI_RowColumn {
               .padding(10)
 
               Column({ space: 10 }) {
-                Text().width(100).height(25).backgroundColor(Color.Blue)
-                Text().width(100).height(25).backgroundColor(Color.Red)
-                Text().width(100).height(25).backgroundColor(Color.Gray)
+                Text().width(100).height(25).backgroundColor(bgColor1)
+                Text().width(100).height(25).backgroundColor(bgColor2)
+                Text().width(100).height(25).backgroundColor(bgColor3)
                 Text().width(100).height(25).backgroundColor(Color.Green)
               }
               .justifyContent(FlexAlign.Center)
@@ -79,12 +79,12 @@ struct UI_RowColumn {
             Row({ space: 20 }) {
               Column() {
                 Row() {
-                  Text().width(20).height(100).backgroundColor(Color.Blue)
-                  Text().width(20).height(100).backgroundColor(Color.Red)
-                  Text().width(20).height(100).backgroundColor(Color.Gray)
+                  Text().width(20).height(100).backgroundColor(bgColor1)
+                  Text().width(20).height(100).backgroundColor(bgColor2)
+                  Text().width(20).height(100).backgroundColor(bgColor3)
                 }
                 .width('100%')
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.Start)
 
                 Text('Start').fontSize(10).maxLines(1)
@@ -93,12 +93,12 @@ struct UI_RowColumn {
 
               Column() {
                 Row() {
-                  Text().width(20).height(100).backgroundColor(Color.Blue)
-                  Text().width(20).height(100).backgroundColor(Color.Red)
-                  Text().width(20).height(100).backgroundColor(Color.Gray)
+                  Text().width(20).height(100).backgroundColor(bgColor1)
+                  Text().width(20).height(100).backgroundColor(bgColor2)
+                  Text().width(20).height(100).backgroundColor(bgColor3)
                 }
                 .width('100%')
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.Center)
 
                 Text('Center').fontSize(10).maxLines(1)
@@ -107,12 +107,12 @@ struct UI_RowColumn {
 
               Column() {
                 Row() {
-                  Text().width(20).height(100).backgroundColor(Color.Blue)
-                  Text().width(20).height(100).backgroundColor(Color.Red)
-                  Text().width(20).height(100).backgroundColor(Color.Gray)
+                  Text().width(20).height(100).backgroundColor(bgColor1)
+                  Text().width(20).height(100).backgroundColor(bgColor2)
+                  Text().width(20).height(100).backgroundColor(bgColor3)
                 }
                 .width('100%')
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.End)
 
                 Text('End').fontSize(10).maxLines(1)
@@ -123,12 +123,12 @@ struct UI_RowColumn {
             Row({ space: 20 }) {
               Column() {
                 Row() {
-                  Text().width(20).height(100).backgroundColor(Color.Blue)
-                  Text().width(20).height(100).backgroundColor(Color.Red)
-                  Text().width(20).height(100).backgroundColor(Color.Gray)
+                  Text().width(20).height(100).backgroundColor(bgColor1)
+                  Text().width(20).height(100).backgroundColor(bgColor2)
+                  Text().width(20).height(100).backgroundColor(bgColor3)
                 }
                 .width('100%')
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.SpaceBetween)
 
                 Text('SpaceBetween').fontSize(10).maxLines(1)
@@ -137,12 +137,12 @@ struct UI_RowColumn {
 
               Column() {
                 Row() {
-                  Text().width(20).height(100).backgroundColor(Color.Blue)
-                  Text().width(20).height(100).backgroundColor(Color.Red)
-                  Text().width(20).height(100).backgroundColor(Color.Gray)
+                  Text().width(20).height(100).backgroundColor(bgColor1)
+                  Text().width(20).height(100).backgroundColor(bgColor2)
+                  Text().width(20).height(100).backgroundColor(bgColor3)
                 }
                 .width('100%')
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.SpaceAround)
 
                 Text('SpaceAround').fontSize(10).maxLines(1)
@@ -151,12 +151,12 @@ struct UI_RowColumn {
 
               Column() {
                 Row() {
-                  Text().width(20).height(100).backgroundColor(Color.Blue)
-                  Text().width(20).height(100).backgroundColor(Color.Red)
-                  Text().width(20).height(100).backgroundColor(Color.Gray)
+                  Text().width(20).height(100).backgroundColor(bgColor1)
+                  Text().width(20).height(100).backgroundColor(bgColor2)
+                  Text().width(20).height(100).backgroundColor(bgColor3)
                 }
                 .width('100%')
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.SpaceEvenly)
 
                 Text('SpaceEvenly').fontSize(10).maxLines(1)
@@ -173,13 +173,13 @@ struct UI_RowColumn {
             Row({ space: 20 }) {
               Column() {
                 Column() {
-                  Text().width('100%').height(20).backgroundColor(Color.Blue)
-                  Text().width('100%').height(20).backgroundColor(Color.Red)
-                  Text().width('100%').height(20).backgroundColor(Color.Gray)
+                  Text().width('100%').height(20).backgroundColor(bgColor1)
+                  Text().width('100%').height(20).backgroundColor(bgColor2)
+                  Text().width('100%').height(20).backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.Start)
 
                 Text('Start').fontSize(10).maxLines(1)
@@ -188,13 +188,13 @@ struct UI_RowColumn {
 
               Column() {
                 Column() {
-                  Text().width('100%').height(20).backgroundColor(Color.Blue)
-                  Text().width('100%').height(20).backgroundColor(Color.Red)
-                  Text().width('100%').height(20).backgroundColor(Color.Gray)
+                  Text().width('100%').height(20).backgroundColor(bgColor1)
+                  Text().width('100%').height(20).backgroundColor(bgColor2)
+                  Text().width('100%').height(20).backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.Center)
 
                 Text('Center').fontSize(10).maxLines(1)
@@ -203,13 +203,13 @@ struct UI_RowColumn {
 
               Column() {
                 Column() {
-                  Text().width('100%').height(20).backgroundColor(Color.Blue)
-                  Text().width('100%').height(20).backgroundColor(Color.Red)
-                  Text().width('100%').height(20).backgroundColor(Color.Gray)
+                  Text().width('100%').height(20).backgroundColor(bgColor1)
+                  Text().width('100%').height(20).backgroundColor(bgColor2)
+                  Text().width('100%').height(20).backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.End)
 
                 Text('End').fontSize(10).maxLines(1)
@@ -220,13 +220,13 @@ struct UI_RowColumn {
             Row({ space: 20 }) {
               Column() {
                 Column() {
-                  Text().width('100%').height(20).backgroundColor(Color.Blue)
-                  Text().width('100%').height(20).backgroundColor(Color.Red)
-                  Text().width('100%').height(20).backgroundColor(Color.Gray)
+                  Text().width('100%').height(20).backgroundColor(bgColor1)
+                  Text().width('100%').height(20).backgroundColor(bgColor2)
+                  Text().width('100%').height(20).backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.SpaceBetween)
 
                 Text('SpaceBetween').fontSize(10).maxLines(1)
@@ -235,13 +235,13 @@ struct UI_RowColumn {
 
               Column() {
                 Column() {
-                  Text().width('100%').height(20).backgroundColor(Color.Blue)
-                  Text().width('100%').height(20).backgroundColor(Color.Red)
-                  Text().width('100%').height(20).backgroundColor(Color.Gray)
+                  Text().width('100%').height(20).backgroundColor(bgColor1)
+                  Text().width('100%').height(20).backgroundColor(bgColor2)
+                  Text().width('100%').height(20).backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.SpaceAround)
 
                 Text('SpaceAround').fontSize(10).maxLines(1)
@@ -250,13 +250,13 @@ struct UI_RowColumn {
 
               Column() {
                 Column() {
-                  Text().width('100%').height(20).backgroundColor(Color.Blue)
-                  Text().width('100%').height(20).backgroundColor(Color.Red)
-                  Text().width('100%').height(20).backgroundColor(Color.Gray)
+                  Text().width('100%').height(20).backgroundColor(bgColor1)
+                  Text().width('100%').height(20).backgroundColor(bgColor2)
+                  Text().width('100%').height(20).backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .justifyContent(FlexAlign.SpaceEvenly)
 
                 Text('SpaceEvenly').fontSize(10).maxLines(1)
@@ -273,13 +273,13 @@ struct UI_RowColumn {
             Row({ space: 20 }) {
               Column() {
                 Row() {
-                  Text().width(20).height('50%').backgroundColor(Color.Blue)
-                  Text().width(20).height('50%').backgroundColor(Color.Red)
-                  Text().width(20).height('50%').backgroundColor(Color.Gray)
+                  Text().width(20).height('50%').backgroundColor(bgColor1)
+                  Text().width(20).height('50%').backgroundColor(bgColor2)
+                  Text().width(20).height('50%').backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .alignItems(VerticalAlign.Top)
 
                 Text('Top').fontSize(10).maxLines(1)
@@ -288,13 +288,13 @@ struct UI_RowColumn {
 
               Column() {
                 Row() {
-                  Text().width(20).height('50%').backgroundColor(Color.Blue)
-                  Text().width(20).height('50%').backgroundColor(Color.Red)
-                  Text().width(20).height('50%').backgroundColor(Color.Gray)
+                  Text().width(20).height('50%').backgroundColor(bgColor1)
+                  Text().width(20).height('50%').backgroundColor(bgColor2)
+                  Text().width(20).height('50%').backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .alignItems(VerticalAlign.Center)
 
                 Text('Center').fontSize(10).maxLines(1)
@@ -303,13 +303,13 @@ struct UI_RowColumn {
 
               Column() {
                 Row() {
-                  Text().width(20).height('50%').backgroundColor(Color.Blue)
-                  Text().width(20).height('50%').backgroundColor(Color.Red)
-                  Text().width(20).height('50%').backgroundColor(Color.Gray)
+                  Text().width(20).height('50%').backgroundColor(bgColor1)
+                  Text().width(20).height('50%').backgroundColor(bgColor2)
+                  Text().width(20).height('50%').backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .alignItems(VerticalAlign.Bottom)
 
                 Text('Bottom').fontSize(10).maxLines(1)
@@ -325,13 +325,13 @@ struct UI_RowColumn {
             Row({ space: 20 }) {
               Column() {
                 Column() {
-                  Text().width('50%').height(20).backgroundColor(Color.Blue)
-                  Text().width('50%').height(20).backgroundColor(Color.Red)
-                  Text().width('50%').height(20).backgroundColor(Color.Gray)
+                  Text().width('50%').height(20).backgroundColor(bgColor1)
+                  Text().width('50%').height(20).backgroundColor(bgColor2)
+                  Text().width('50%').height(20).backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .alignItems(HorizontalAlign.Start)
 
                 Text('Start').fontSize(10).maxLines(1)
@@ -340,13 +340,13 @@ struct UI_RowColumn {
 
               Column() {
                 Column() {
-                  Text().width('50%').height(20).backgroundColor(Color.Blue)
-                  Text().width('50%').height(20).backgroundColor(Color.Red)
-                  Text().width('50%').height(20).backgroundColor(Color.Gray)
+                  Text().width('50%').height(20).backgroundColor(bgColor1)
+                  Text().width('50%').height(20).backgroundColor(bgColor2)
+                  Text().width('50%').height(20).backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .alignItems(HorizontalAlign.Center)
 
                 Text('Center').fontSize(10).maxLines(1)
@@ -355,13 +355,13 @@ struct UI_RowColumn {
 
               Column() {
                 Column() {
-                  Text().width('50%').height(20).backgroundColor(Color.Blue)
-                  Text().width('50%').height(20).backgroundColor(Color.Red)
-                  Text().width('50%').height(20).backgroundColor(Color.Gray)
+                  Text().width('50%').height(20).backgroundColor(bgColor1)
+                  Text().width('50%').height(20).backgroundColor(bgColor2)
+                  Text().width('50%').height(20).backgroundColor(bgColor3)
                 }
                 .width('100%')
                 .height(100)
-                .backgroundColor(this.bgColor)
+                .backgroundColor(bgColor0)
                 .alignItems(HorizontalAlign.End)
 
                 Text('End').fontSize(10).maxLines(1)
@@ -376,9 +376,9 @@ struct UI_RowColumn {
             Text('Row布局翻转').margin({ top: 30 }).padding(10)
             Row({ space: 20 }) {
               Row() {
-                Text('1').height('100%').layoutWeight(1).backgroundColor(Color.Blue)
-                Text('2').height('100%').layoutWeight(1).backgroundColor(Color.Red)
-                Text('3').height('100%').layoutWeight(1).backgroundColor(Color.Gray)
+                Text('1').height('100%').layoutWeight(1).backgroundColor(bgColor1)
+                Text('2').height('100%').layoutWeight(1).backgroundColor(bgColor2)
+                Text('3').height('100%').layoutWeight(1).backgroundColor(bgColor3)
               }
               .height(30)
               .justifyContent(FlexAlign.Center)
@@ -387,9 +387,9 @@ struct UI_RowColumn {
               .padding(10)
 
               Row() {
-                Text('1').height('100%').layoutWeight(1).backgroundColor(Color.Blue)
-                Text('2').height('100%').layoutWeight(1).backgroundColor(Color.Red)
-                Text('3').height('100%').layoutWeight(1).backgroundColor(Color.Gray)
+                Text('1').height('100%').layoutWeight(1).backgroundColor(bgColor1)
+                Text('2').height('100%').layoutWeight(1).backgroundColor(bgColor2)
+                Text('3').height('100%').layoutWeight(1).backgroundColor(bgColor3)
               }
               .height(30)
               .justifyContent(FlexAlign.Center)
@@ -401,9 +401,9 @@ struct UI_RowColumn {
             Text('Column布局翻转').margin({ top: 30 }).padding(10)
             Row({ space: 20 }) {
               Column() {
-                Text('1').width('100%').layoutWeight(1).backgroundColor(Color.Blue)
-                Text('2').width('100%').layoutWeight(1).backgroundColor(Color.Red)
-                Text('3').width('100%').layoutWeight(1).backgroundColor(Color.Gray)
+                Text('1').width('100%').layoutWeight(1).backgroundColor(bgColor1)
+                Text('2').width('100%').layoutWeight(1).backgroundColor(bgColor2)
+                Text('3').width('100%').layoutWeight(1).backgroundColor(bgColor3)
               }
               .height(60)
               .justifyContent(FlexAlign.Center)
@@ -412,9 +412,9 @@ struct UI_RowColumn {
               .padding(10)
 
               Column() {
-                Text('1').width('100%').layoutWeight(1).backgroundColor(Color.Blue)
-                Text('2').width('100%').layoutWeight(1).backgroundColor(Color.Red)
-                Text('3').width('100%').layoutWeight(1).backgroundColor(Color.Gray)
+                Text('1').width('100%').layoutWeight(1).backgroundColor(bgColor1)
+                Text('2').width('100%').layoutWeight(1).backgroundColor(bgColor2)
+                Text('3').width('100%').layoutWeight(1).backgroundColor(bgColor3)
               }
               .height(60)
               .justifyContent(FlexAlign.Center)
