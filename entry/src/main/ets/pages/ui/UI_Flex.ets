@@ -1,78 +1,43 @@
 import { getTitleParams, TitleBar } from '../../components/TitleBar';
 import { bgColor0, bgColor1, bgColor2, bgColor3 } from '../../data/Colors';
 import { LengthMetrics, LengthMetricsUnit } from '@kit.ArkUI';
-import { buildFlex, buildRow, FlexDirectionItem, FlexWrapItem, ItemAlignItem, TemplateContent } from '../Templates';
+import { buildFlex, buildRow, TemplateContent, UpdateLineTextTemplate } from '../Templates';
+import { flexDirections, flexAligns, flexWraps, itemAligns } from '../../data/Arrays';
+import { FlexAlignItem, FlexDirectionItem, FlexWrapItem, ItemAlignItem } from '../../data/Beans';
 
 @Entry
 @Component
 struct UI_Flex {
   @State title: string = '';
-  private directions: FlexDirectionItem[] = [
-    {
-      direction: FlexDirection.Row,
-      value: 'Row'
-    },
-    {
-      direction: FlexDirection.Column,
-      value: 'Column'
-    },
-    {
-      direction: FlexDirection.RowReverse,
-      value: 'RowReverse'
-    },
-    {
-      direction: FlexDirection.ColumnReverse,
-      value: 'ColumnReverse'
-    }
-  ]
-  private itemAligns: ItemAlignItem[] = [
-    {
-      value: 'Auto',
-      itemAlign: ItemAlign.Auto
-    },
-    {
-      value: 'Start',
-      itemAlign: ItemAlign.Start
-    },
-    {
-      value: 'Center',
-      itemAlign: ItemAlign.Center
-    },
-    {
-      value: 'End',
-      itemAlign: ItemAlign.End
-    },
-    {
-      value: 'Baseline',
-      itemAlign: ItemAlign.Baseline
-    },
-    {
-      value: 'Stretch',
-      itemAlign: ItemAlign.Stretch
-    },
-  ]
-  private flexWraps: FlexWrapItem[] = [
-    {
-      value: 'NoWrap',
-      flexWrap: FlexWrap.NoWrap
-    },
-    {
-      value: 'Wrap',
-      flexWrap: FlexWrap.Wrap
-    },
-    {
-      value: 'WrapReverse',
-      flexWrap: FlexWrap.WrapReverse
-    },
-  ]
-  @State currentFlexDirection: FlexDirectionItem = this.directions[0]
-  @State currentItemAlign: ItemAlignItem = this.itemAligns[0]
-  // 设置交叉轴对齐方式设置的排列方向
-  @State currentCrossFlexDirection: FlexDirectionItem = this.directions[0]
-  @State isCrossDirectionPopShow: boolean = false
-  @State currentWrapDirection: FlexDirectionItem = this.directions[0]
-  @State isWrapPopShow: boolean = false
-  @State currentFlexWrap: FlexWrapItem = this.flexWraps[0]
+  /**
+   * 只设置布局方向
+   */
+  @State currentFlexDirection: FlexDirectionItem = flexDirections[0]
+  /**
+   * 只设置交叉轴对齐方式
+   */
+  @State currentItemAlign: ItemAlignItem = itemAligns[0]
+  /**
+   * 设置交叉轴对齐方式设置的排列方向
+   */
+  @State currentCrossFlexDirection: FlexDirectionItem = flexDirections[0]
+  /**
+   * 设置布局换行需要的变量
+   */
+  @State currentWrapDirection: FlexDirectionItem = flexDirections[0]
+  @State currentFlexWrap: FlexWrapItem = flexWraps[0]
+  /**
+   * 设置交叉轴对齐方式需要的变量
+   */
+  @State currentCrossAxisAlignDirection: FlexDirectionItem = flexDirections[0]
+  @State currentCrossAxisAlignWrap: FlexWrapItem = flexWraps[1]
+  @State currentCrossAxisAlignFlexAlign: FlexAlignItem = flexAligns[0]
+  /**
+   * 设置子组件间隔需要的变量
+   */
+  @State currentChildSpaceDirection: FlexDirectionItem = flexDirections[0]
+  @State childMainSpace: number = 0
+  @State childCrossSpace: number = 0
 
   aboutToAppear(): void {
     this.title = getTitleParams()
@@ -105,12 +70,12 @@ struct UI_Flex {
           TemplateContent({
             title: '3. Flex排列方向',
             subtitle: '当前排列方向：',
-            items: this.directions.map(item => item.value),
+            items: flexDirections.map(item => item.value),
             content: () => {
               this.buildFlexDirection()
             },
             onPopupClick: (index: number) => {
-              this.currentFlexDirection = this.directions[index]
+              this.currentFlexDirection = flexDirections[index]
             }
           })
         }
@@ -119,12 +84,12 @@ struct UI_Flex {
           TemplateContent({
             title: '4. Flex交叉轴对齐方式',
             subtitle: '当前交叉轴对齐方式：',
-            items: this.itemAligns.map(item => item.value),
+            items: itemAligns.map(item => item.value),
             content: () => {
               this.buildFlexCrossAlign()
             },
             onPopupClick: (index: number) => {
-              this.currentItemAlign = this.itemAligns[index]
+              this.currentItemAlign = itemAligns[index]
             }
           })
         }
@@ -133,146 +98,37 @@ struct UI_Flex {
           TemplateContent({
             title: '5. 布局换行换列',
             subtitle: '当前换行策略：',
-            items: this.flexWraps.map(item => item.value),
+            items: flexWraps.map(item => item.value),
             content: () => {
               this.buildFlexWrap()
             },
             onPopupClick: (index: number) => {
-              this.currentFlexWrap = this.flexWraps[index]
+              this.currentFlexWrap = flexWraps[index]
             }
           })
         }
 
         ListItem() {
           TemplateContent({
-            title: '6. 布局换行换列',
-            subtitle: '当前换行策略：',
-            items: this.flexWraps.map(item => item.value),
+            title: '6. 多行内容交叉轴对齐',
+            subtitle: '当前交叉轴对齐方式：',
+            items: flexAligns.map(item => item.value),
             content: () => {
-              this.buildFlexWrap()
+              this.buildCrossAxisAlign()
             },
             onPopupClick: (index: number) => {
-              this.currentFlexWrap = this.flexWraps[index]
+              this.currentCrossAxisAlignFlexAlign = flexAligns[index]
             }
           })
         }
 
-
         ListItem() {
-          Column() {
-            Text('多行内容对齐').padding(10)
-            Flex({ wrap: FlexWrap.Wrap, alignContent: FlexAlign.Center }) {
-              Text().width('50%').height(25).backgroundColor(bgColor1)
-              Text().width('50%').height(25).backgroundColor(bgColor2)
-              Text().width('50%').height(25).backgroundColor(bgColor3)
+          TemplateContent({
+            title: '7. 子组件间隔',
+            content: () => {
+              this.buildSpace()
             }
-            .width('100%')
-            .height(100)
-            .backgroundColor(bgColor0)
-
-            Text('不换列，布局被压缩').fontSize(12)
-
-            Row({ space: 20 }) {
-              Flex({ wrap: FlexWrap.Wrap, alignContent: FlexAlign.Start }) {
-                Text().height(25).width('50%').backgroundColor(bgColor1)
-                Text().height(25).width('50%').backgroundColor(bgColor2)
-                Text().height(25).width('50%').backgroundColor(bgColor3)
-              }
-              .height('100%')
-              .backgroundColor(bgColor0)
-              .layoutWeight(1)
-
-              Flex({ wrap: FlexWrap.Wrap, alignContent: FlexAlign.Center }) {
-                Text().height(25).width('50%').backgroundColor(bgColor1)
-                Text().height(25).width('50%').backgroundColor(bgColor2)
-                Text().height(25).width('50%').backgroundColor(bgColor3)
-              }
-              .height('100%')
-              .backgroundColor(bgColor0)
-              .layoutWeight(1)
-
-              Flex({ wrap: FlexWrap.Wrap, alignContent: FlexAlign.End }) {
-                Text().height(25).width('50%').backgroundColor(bgColor1)
-                Text().height(25).width('50%').backgroundColor(bgColor2)
-                Text().height(25).width('50%').backgroundColor(bgColor3)
-              }
-              .height('100%')
-              .backgroundColor(bgColor0)
-              .layoutWeight(1)
-            }
-            .width('100%')
-            .height(100)
-            .margin({ top: 20 })
-
-            Row() {
-              Text('Start')
-              Text('Center')
-              Text('End')
-            }
-            .width('100%')
-            .justifyContent(FlexAlign.SpaceAround)
-
-            Text('换列，第三个组件自动换列').fontSize(12)
-
-            Row({ space: 20 }) {
-              Flex({ wrap: FlexWrap.Wrap, alignContent: FlexAlign.SpaceBetween }) {
-                Text().height(25).width('50%').backgroundColor(bgColor1)
-                Text().height(25).width('50%').backgroundColor(bgColor2)
-                Text().height(25).width('50%').backgroundColor(bgColor3)
-              }
-              .height('100%')
-              .backgroundColor(bgColor0)
-              .layoutWeight(1)
-
-              Flex({ wrap: FlexWrap.Wrap, alignContent: FlexAlign.SpaceAround }) {
-                Text().height(25).width('50%').backgroundColor(bgColor1)
-                Text().height(25).width('50%').backgroundColor(bgColor2)
-                Text().height(25).width('50%').backgroundColor(bgColor3)
-              }
-              .height('100%')
-              .backgroundColor(bgColor0)
-              .layoutWeight(1)
-
-              Flex({ wrap: FlexWrap.Wrap, alignContent: FlexAlign.SpaceEvenly }) {
-                Text().height(25).width('50%').backgroundColor(bgColor1)
-                Text().height(25).width('50%').backgroundColor(bgColor2)
-                Text().height(25).width('50%').backgroundColor(bgColor3)
-              }
-              .height('100%')
-              .backgroundColor(bgColor0)
-              .layoutWeight(1)
-            }
-            .width('100%')
-            .height(100)
-            .margin({ top: 20 })
-
-            Row() {
-              Text('SpaceBetween')
-              Text('SpaceAround')
-              Text('SpaceEvenly')
-            }
-            .width('100%')
-            .justifyContent(FlexAlign.SpaceAround)
-          }
-        }
-
-        ListItem() {
-          Column() {
-            Text('子组件间距').padding(10)
-            Flex({
-              wrap: FlexWrap.Wrap, space: {
-                main: LengthMetrics.vp(10),
-                cross: LengthMetrics.vp(10),
-              }
-            }) {
-              Text().height(25).width('45%').backgroundColor(bgColor1)
-              Text().height(25).width('45%').backgroundColor(bgColor2)
-              Text().height(25).width('45%').backgroundColor(bgColor3)
-            }
-            .width('100%')
-            .height(100)
-            .backgroundColor(bgColor0)
-          }
+          })
         }
       }
       .width('100%')
@@ -319,30 +175,12 @@ struct UI_Flex {
   @Builder
   buildFlexCrossAlign() {
     Column() {
-      Text() {
-        Span('更换')
-          .fontColor(Color.Blue)
-          .decoration({
-            type: TextDecorationType.Underline,
-            color: Color.Blue
-          })
-          .onClick(() => {
-            this.isCrossDirectionPopShow = true
-          })
-        Span(`当前排列方向：${this.currentCrossFlexDirection.value}`)
-      }
-      .padding(10)
-      .width('100%')
-      .bindPopup($$this.isCrossDirectionPopShow, {
-        builder: () => {
-          this.directionPopItems((item) => {
-            this.currentCrossFlexDirection = item
-            this.isCrossDirectionPopShow = false
-          })
-        },
-        onStateChange: (event => {
-          this.isCrossDirectionPopShow = event.isVisible
-        })
+      UpdateLineTextTemplate({
+        label: '当前排列方向',
+        items: flexDirections.map(item => item.value),
+        onItemClick: (index: number) => {
+          this.currentCrossFlexDirection = flexDirections[index]
+        }
       })
 
       buildFlex({
@@ -364,30 +202,12 @@ struct UI_Flex {
   @Builder
   buildFlexWrap() {
     Column() {
-      Text() {
-        Span('更换')
-          .fontColor(Color.Blue)
-          .decoration({
-            type: TextDecorationType.Underline,
-            color: Color.Blue
-          })
-          .onClick(() => {
-            this.isWrapPopShow = true
-          })
-        Span(`当前排列方向：${this.currentWrapDirection.value}`)
-      }
-      .padding(10)
-      .width('100%')
-      .bindPopup($$this.isWrapPopShow, {
-        builder: () => {
-          this.directionPopItems((item) => {
-            this.currentWrapDirection = item
-            this.isWrapPopShow = false
-          })
-        },
-        onStateChange: (event => {
-          this.isWrapPopShow = event.isVisible
-        })
+      UpdateLineTextTemplate({
+        label: '当前排列方向',
+        items: flexDirections.map(item => item.value),
+        onItemClick: (index: number) => {
+          this.currentWrapDirection = flexDirections[index]
+        }
       })
 
       buildFlex({
@@ -401,17 +221,85 @@ struct UI_Flex {
     }
   }
 
+  /**
+   * 交叉轴对齐方式
+   */
   @Builder
-  directionPopItems(onClick: (item: FlexDirectionItem) => void) {
+  buildCrossAxisAlign() {
     Column() {
-      ForEach(this.directions, (item: FlexDirectionItem) => {
-        Text(item.value).width('50%').height(30)
-          .onClick(() => {
-            onClick(item)
-          })
+      UpdateLineTextTemplate({
+        label: '当前排列方向',
+        items: flexDirections.map(item => item.value),
+        onItemClick: (index: number) => {
+          this.currentCrossAxisAlignDirection = flexDirections[index]
+        }
+      })
+      UpdateLineTextTemplate({
+        label: '当前换行策略',
+        items: flexWraps.map(item => item.value),
+        defaultItem: this.currentCrossAxisAlignWrap.value,
+        onItemClick: (index: number) => {
+          this.currentCrossAxisAlignWrap = flexWraps[index]
+        }
+      })
+      buildFlex({
+        itemWidth: '35%',
+        itemHeight: 40,
+        width: '100%',
+        height: 100,
+        alignContent: this.currentCrossAxisAlignFlexAlign.flexAlign,
+        direction: this.currentCrossAxisAlignDirection.direction,
+        wrap: this.currentCrossAxisAlignWrap.flexWrap
       })
     }
-    .padding(20)
+  }
+
+  @Builder
+  buildSpace() {
+    Column() {
+      buildFlex({
+        itemWidth: '35%',
+        itemHeight: 40,
+        width: '100%',
+        height: 150,
+        direction: this.currentChildSpaceDirection.direction,
+        wrap: FlexWrap.Wrap,
+        mainSpace: this.childMainSpace,
+        crossSpace: this.childCrossSpace
+      })
+
+      Row() {
+        Text('主轴间隔').width(70)
+        Slider({
+          min: 0,
+          max: 60,
+          step: 1,
+          value: this.childMainSpace,
+        })
+          .onChange((value) => {
+            this.childMainSpace = value
+          })
+          .layoutWeight(1)
+          .showTips(true, this.childMainSpace.toString())
+      }
+      .padding({ right: 10 })
+
+      Row() {
+        Text('交叉轴间隔').width(70)
+        Slider({
+          min: 0,
+          max: 60,
+          step: 1,
+          value: this.childCrossSpace,
+        })
+          .onChange((value) => {
+            this.childCrossSpace = value
+          })
+          .layoutWeight(1)
+          .showTips(true, this.childCrossSpace.toString())
+      }
+      .padding({ right: 10 })
+    }
   }
 }
 

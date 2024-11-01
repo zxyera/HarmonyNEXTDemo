@@ -1,77 +1,18 @@
 import { getTitleParams, TitleBar } from '../../components/TitleBar';
-import { bgColor0, bgColor1, bgColor2, bgColor3 } from '../../data/Colors';
-import {
-  buildColumn,
-  buildRow,
-  FlexAlignItem,
-  HorizontalAlignItem,
-  TemplateContent,
-  VerticalAlignItem
-} from '../Templates';
+import { flexAligns, horizontalAligns, verticalAligns } from '../../data/Arrays';
+import { FlexAlignItem, HorizontalAlignItem, VerticalAlignItem } from '../../data/Beans';
+import { bgColor0 } from '../../data/Colors';
+import { buildColumn, buildRow, TemplateContent, } from '../Templates';
 
 @Entry
 @Component
 struct UI_RowColumn {
   @State title: string = '';
   @State rowColumnSpace: number = 0
-  private flexAligns: FlexAlignItem[] = [
-    {
-      value: 'Start',
-      flexAlign: FlexAlign.Start
-    },
-    {
-      value: 'Center',
-      flexAlign: FlexAlign.Center
-    },
-    {
-      value: 'End',
-      flexAlign: FlexAlign.End
-    },
-    {
-      value: 'SpaceBetween',
-      flexAlign: FlexAlign.SpaceBetween
-    },
-    {
-      value: 'SpaceAround',
-      flexAlign: FlexAlign.SpaceAround
-    },
-    {
-      value: 'SpaceEvenly',
-      flexAlign: FlexAlign.SpaceEvenly
-    },
-  ]
-  private verticalAligns: VerticalAlignItem[] = [
-    {
-      value: 'Top',
-      verticalAlign: VerticalAlign.Top
-    },
-    {
-      value: 'Center',
-      verticalAlign: VerticalAlign.Center
-    },
-    {
-      value: 'Bottom',
-      verticalAlign: VerticalAlign.Bottom
-    },
-  ]
-  private horizontalAligns: HorizontalAlignItem[] = [
-    {
-      value: 'Top',
-      horizontalAlign: HorizontalAlign.Start
-    },
-    {
-      value: 'Center',
-      horizontalAlign: HorizontalAlign.Center
-    },
-    {
-      value: 'Bottom',
-      horizontalAlign: HorizontalAlign.End
-    },
-  ]
-  @State currentRowMainFlexAlign: FlexAlignItem = this.flexAligns[0]
-  @State currentColumnMainFlexAlign: FlexAlignItem = this.flexAligns[0]
-  @State currentRowCrossFlexAlign: VerticalAlignItem = this.verticalAligns[0]
-  @State currentColumnCrossFlexAlign: HorizontalAlignItem = this.horizontalAligns[0]
+  @State currentRowMainFlexAlign: FlexAlignItem = flexAligns[0]
+  @State currentColumnMainFlexAlign: FlexAlignItem = flexAligns[0]
+  @State currentRowCrossFlexAlign: VerticalAlignItem = verticalAligns[0]
+  @State currentColumnCrossFlexAlign: HorizontalAlignItem = horizontalAligns[0]
   @State rowReverse: boolean = false
   @State columnReverse: boolean = false
 
@@ -109,9 +50,9 @@ struct UI_RowColumn {
             content: () => {
               this.buildRowMainAlign()
             },
-            items: this.flexAligns.map(item => item.value),
+            items: flexAligns.map(item => item.value),
             onPopupClick: (index: number) => {
-              this.currentRowMainFlexAlign = this.flexAligns[index]
+              this.currentRowMainFlexAlign = flexAligns[index]
             }
           })
         }
@@ -123,9 +64,9 @@ struct UI_RowColumn {
             content: () => {
               this.buildColumnMainAlign()
             },
-            items: this.flexAligns.map(item => item.value),
+            items: flexAligns.map(item => item.value),
             onPopupClick: (index: number) => {
-              this.currentColumnMainFlexAlign = this.flexAligns[index]
+              this.currentColumnMainFlexAlign = flexAligns[index]
             }
           })
         }
@@ -137,9 +78,9 @@ struct UI_RowColumn {
             content: () => {
               this.buildRowCrossAlign()
             },
-            items: this.verticalAligns.map(item => item.value),
+            items: verticalAligns.map(item => item.value),
             onPopupClick: (index: number) => {
-              this.currentRowCrossFlexAlign = this.verticalAligns[index]
+              this.currentRowCrossFlexAlign = verticalAligns[index]
             }
           })
         }
@@ -151,9 +92,9 @@ struct UI_RowColumn {
             content: () => {
               this.buildColumnCrossAlign()
             },
-            items: this.horizontalAligns.map(item => item.value),
+            items: horizontalAligns.map(item => item.value),
             onPopupClick: (index: number) => {
-              this.currentColumnCrossFlexAlign = this.horizontalAligns[index]
+              this.currentColumnCrossFlexAlign = horizontalAligns[index]
             }
           })
         }

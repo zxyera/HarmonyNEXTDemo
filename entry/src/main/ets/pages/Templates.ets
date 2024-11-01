@@ -1,5 +1,6 @@
 import { bgColor0, bgColor1, bgColor2, bgColor3 } from "../data/Colors"
 import { LengthMetrics } from "@kit.ArkUI"
+import { FlexParams, SizeParams } from "../data/BuilderParams"
 
 @Builder
 export function titleText(title: string) {
@@ -93,6 +94,69 @@ export struct TemplateContent {
   }
 }
 
+@Component
+export struct UpdateLineTextTemplate {
+  @State popupShow: boolean = false
+  @State currentItem: string = ''
+  items: string[] = []
+  defaultItem?: string
+  label: string = ''
+  onItemClick: (index: number, item: string) => void = () => {
+  }
+
+  aboutToAppear(): void {
+    if (this.defaultItem) {
+      this.currentItem = this.defaultItem
+    } else {
+      if (this.items.length > 0) {
+        this.currentItem = this.items[0]
+      }
+    }
+  }
+
+  build() {
+    Text() {
+      Span('更换')
+        .fontColor(Color.Blue)
+        .decoration({
+          type: TextDecorationType.Underline,
+          color: Color.Blue
+        })
+        .onClick(() => {
+          this.popupShow = true
+        })
+      Span(`${this.label}：${this.currentItem}`)
+    }
+    .padding(10)
+    .width('100%')
+    .bindPopup($$this.popupShow, {
+      builder: () => {
+        this.buildItems((item, index) => {
+          this.currentItem = item
+          this.popupShow = false
+          this.onItemClick(index, item)
+        })
+      },
+      onStateChange: (event => {
+        this.popupShow = event.isVisible
+      })
+    })
+  }
+
+  @Builder
+  buildItems(onClick: (item: string, index: number) => void) {
+    Column() {
+      ForEach(this.items, (item: string, index) => {
+        Text(item).width('50%').height(30)
+          .onClick(() => {
+            onClick(item, index)
+          })
+      })
+    }
+    .padding(20)
+  }
+}
+
 @Builder
 export function buildRow(params: SizeParams) {
   Row({ space: params.space }) {
@@ -171,67 +235,5 @@ export function buildFlex(params: FlexParams) {
   .backgroundColor(params.bgColor ?? bgColor0)
 }
 
-export class BaseParams {
-  itemWidth: Length = 0
-  itemHeight: Length = 0
-  itemWidth2?: Length = 0
-  itemHeight2?: Length = 0
-  itemWidth3?: Length = 0
-  itemHeight3?: Length = 0
-  width?: Length
-  height?: Length
-  bgColor?: ResourceColor
-}
 
-@Observed
-class SizeParams extends BaseParams {
-  space?: string | number
-  flexAlign?: FlexAlign
-  verticalAlign?: VerticalAlign
-  horizontalAlign?: HorizontalAlign
-  padding?: Padding | Length | LocalizedPadding
-  reverse?: boolean
-}
 
-@Observed
-class FlexParams extends BaseParams {
-  direction?: FlexDirection
-  wrap?: FlexWrap
-  justifyContent?: FlexAlign
-  alignItems?: ItemAlign
-  alignContent?: FlexAlign
-  mainSpace?: number
-  crossSpace?: number
-}
-
-export interface Base {
-  value: string
-}
-
-export interface AlignmentItem extends Base {
-  alignment: Alignment
-}
-
-export interface FlexAlignItem extends Base {
-  flexAlign: FlexAlign
-}
-
-export interface VerticalAlignItem extends Base {
-  verticalAlign: VerticalAlign
-}
-
-export interface HorizontalAlignItem extends Base {
-  horizontalAlign: HorizontalAlign
-}
-
-export interface FlexDirectionItem extends Base {
-  direction: FlexDirection
-}
-
-export interface ItemAlignItem extends Base {
-  itemAlign: ItemAlign
-}
-
-export interface FlexWrapItem extends Base {
-  flexWrap?: FlexWrap
-}

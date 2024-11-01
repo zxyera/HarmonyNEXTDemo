@@ -1,54 +1,15 @@
 import { getTitleParams, TitleBar } from '../../components/TitleBar';
 import { bgColor0, bgColor1, bgColor2, bgColor3 } from '../../data/Colors';
-import { AlignmentItem, TemplateContent } from '../Templates';
+import { TemplateContent } from '../Templates';
 import json from '@ohos.util.json';
+import { AlignmentItem } from '../../data/Beans';
+import { alignments } from '../../data/Arrays';
 
 @Entry
 @Component
 struct UI_Stack {
   @State title: string = '';
-  private alignmentItems: AlignmentItem[] = [
-    {
-      value: 'TopStart',
-      alignment: Alignment.TopStart
-    },
-    {
-      value: 'Top',
-      alignment: Alignment.Top
-    },
-    {
-      value: 'TopEnd',
-      alignment: Alignment.TopEnd
-    },
-    {
-      value: 'Start',
-      alignment: Alignment.Start
-    },
-    {
-      value: 'Center',
-      alignment: Alignment.Center
-    },
-    {
-      value: 'End',
-      alignment: Alignment.End
-    },
-    {
-      value: 'BottomStart',
-      alignment: Alignment.BottomStart
-    },
-    {
-      value: 'Bottom',
-      alignment: Alignment.Bottom
-    },
-    {
-      value: 'BottomEnd',
-      alignment: Alignment.BottomEnd
-    },
-  ]
-  @State currentAlignmentItem: AlignmentItem = {
-    value: 'TopStart',
-    alignment: Alignment.TopStart
-  }
+  @State currentAlignmentItem: AlignmentItem = alignments[0]
 
   aboutToAppear(): void {
     this.title = getTitleParams()
@@ -64,9 +25,9 @@ struct UI_Stack {
         },
         title: '1. 交叉轴内容对齐alignContent',
         subtitle: `当前方向：`,
-        items: this.alignmentItems.map(item => item.value),
+        items: alignments.map(item => item.value),
         onPopupClick: (index: number) => {
-          this.currentAlignmentItem = this.alignmentItems[index]
+          this.currentAlignmentItem = alignments[index]
           console.log(`current : ${json.stringify(this.currentAlignmentItem)}`)
         }
       })
