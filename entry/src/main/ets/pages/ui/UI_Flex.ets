@@ -1,12 +1,13 @@
 import { getTitleParams, TitleBar } from '../../components/TitleBar';
 import { bgColor0, bgColor1, bgColor2, bgColor3 } from '../../data/Colors';
 import { LengthMetrics, LengthMetricsUnit } from '@kit.ArkUI';
+import { buildFlex, buildRow, FlexDirectionItem, FlexWrapItem, ItemAlignItem, TemplateContent } from '../Templates';
 
 @Entry
 @Component
 struct UI_Flex {
   @State title: string = '';
-  directions: FlexDirectionItem[] = [
+  private directions: FlexDirectionItem[] = [
     {
       direction: FlexDirection.Row,
       value: 'Row'
@@ -24,8 +25,54 @@ struct UI_Flex {
       value: 'ColumnReverse'
     }
   ]
-  @State flexDirection: FlexDirectionItem = this.directions[0]
-  @State isDirectionPopShow: boolean = false
+  private itemAligns: ItemAlignItem[] = [
+    {
+      value: 'Auto',
+      itemAlign: ItemAlign.Auto
+    },
+    {
+      value: 'Start',
+      itemAlign: ItemAlign.Start
+    },
+    {
+      value: 'Center',
+      itemAlign: ItemAlign.Center
+    },
+    {
+      value: 'End',
+      itemAlign: ItemAlign.End
+    },
+    {
+      value: 'Baseline',
+      itemAlign: ItemAlign.Baseline
+    },
+    {
+      value: 'Stretch',
+      itemAlign: ItemAlign.Stretch
+    },
+  ]
+  private flexWraps: FlexWrapItem[] = [
+    {
+      value: 'NoWrap',
+      flexWrap: FlexWrap.NoWrap
+    },
+    {
+      value: 'Wrap',
+      flexWrap: FlexWrap.Wrap
+    },
+    {
+      value: 'WrapReverse',
+      flexWrap: FlexWrap.WrapReverse
+    },
+  ]
+  @State currentFlexDirection: FlexDirectionItem = this.directions[0]
+  @State currentItemAlign: ItemAlignItem = this.itemAligns[0]
+  // 设置交叉轴对齐方式设置的排列方向
+  @State currentCrossFlexDirection: FlexDirectionItem = this.directions[0]
+  @State isCrossDirectionPopShow: boolean = false
+  @State currentWrapDirection: FlexDirectionItem = this.directions[0]
+  @State isWrapPopShow: boolean = false
+  @State currentFlexWrap: FlexWrapItem = this.flexWraps[0]
 
   aboutToAppear(): void {
     this.title = getTitleParams()
@@ -37,233 +84,79 @@ struct UI_Flex {
 
       List() {
         ListItem() {
-          Column() {
-            Text('Row排列，超出部分不可见').padding(10)
-            Row() {
-              Text().width(80).height(25).backgroundColor(bgColor1)
-              Text().width(80).height(25).backgroundColor(bgColor2)
-              Text().width(80).height(25).backgroundColor(bgColor3)
-              Text().width(80).height(25).backgroundColor(Color.Green)
-              Text().width(80).height(25).backgroundColor(Color.Yellow)
+          TemplateContent({
+            title: '1. Row排列，超出部分不可见',
+            content: () => {
+              this.buildRowPreview()
             }
-
-            Text('Flex排列，子组件被压缩至全部可见').padding(10)
-            Flex() {
-              Text().width(80).height(25).backgroundColor(bgColor1)
-              Text().width(80).height(25).backgroundColor(bgColor2)
-              Text().width(80).height(25).backgroundColor(bgColor3)
-              Text().width(80).height(25).backgroundColor(Color.Green)
-              Text().width(80).height(25).backgroundColor(Color.Yellow)
-            }
-          }
-          .width('100%')
+          })
         }
 
         ListItem() {
-          Column() {
-            Text() {
-              Span('设置方向为')
-              Span(`FlexDirection.${this.flexDirection.value}`)
-                .fontColor(bgColor1)
-                .decoration({
-                  type: TextDecorationType.Underline,
-                  color: bgColor1
-                })
-                .onClick(() => {
-                  this.isDirectionPopShow = true
-                })
-            }.padding(10)
-            .width('100%')
-            .textAlign(TextAlign.Center)
-            .bindPopup($$this.isDirectionPopShow,
-              {
-                builder: this.directionPopItems(), arrowPointPosition: ArrowPointPosition.END,
-                onStateChange: (event) => {
-                  this.isDirectionPopShow = event.isVisible
-                }
-              })
-
-            Flex({ direction: this.flexDirection.direction, alignItems: ItemAlign.Auto }) {
-              Text().width(80).height(25).backgroundColor(bgColor1)
-              Text().width(80).height(25).backgroundColor(bgColor2)
-              Text().width(80).height(25).backgroundColor(bgColor3)
+          TemplateContent({
+            title: '2. Flex排列，子组件被压缩至全部可见',
+            content: () => {
+              this.buildFlexPreview()
             }
-            .width('100%')
-            .height(100)
-            .backgroundColor(bgColor0)
-          }
+          })
         }
 
         ListItem() {
-          Column() {
-            Text('交叉轴对齐方式').padding(10)
-            Row({ space: 20 }) {
-              Column() {
-                Flex({ alignItems: ItemAlign.Auto }) {
-                  Text().width(30).height(20).backgroundColor(bgColor1)
-                  Text().width(30).height(40).backgroundColor(bgColor2)
-                  Text().width(30).height(30).backgroundColor(bgColor3)
-                }
-                .backgroundColor(bgColor0)
-                .height(50)
-
-                Text('Auto')
-              }
-              .layoutWeight(1)
-
-              Column() {
-                Flex({ alignItems: ItemAlign.Start }) {
-                  Text().width(30).height(20).backgroundColor(bgColor1)
-                  Text().width(30).height(40).backgroundColor(bgColor2)
-                  Text().width(30).height(30).backgroundColor(bgColor3)
-                }
-                .backgroundColor(bgColor0)
-                .height(50)
-
-                Text('Start')
-              }
-              .layoutWeight(1)
+          TemplateContent({
+            title: '3. Flex排列方向',
+            subtitle: '当前排列方向：',
+            items: this.directions.map(item => item.value),
+            content: () => {
+              this.buildFlexDirection()
+            },
+            onPopupClick: (index: number) => {
+              this.currentFlexDirection = this.directions[index]
             }
-            .width('100%')
-
-            Row({ space: 20 }) {
-              Column() {
-                Flex({ alignItems: ItemAlign.Center }) {
-                  Text().width(30).height(20).backgroundColor(bgColor1)
-                  Text().width(30).height(40).backgroundColor(bgColor2)
-                  Text().width(30).height(30).backgroundColor(bgColor3)
-                }
-                .backgroundColor(bgColor0)
-                .height(50)
-
-                Text('Center')
-              }
-              .layoutWeight(1)
-
-              Column() {
-                Flex({ alignItems: ItemAlign.End }) {
-                  Text().width(30).height(20).backgroundColor(bgColor1)
-                  Text().width(30).height(40).backgroundColor(bgColor2)
-                  Text().width(30).height(30).backgroundColor(bgColor3)
-                }
-                .backgroundColor(bgColor0)
-                .height(50)
-
-                Text('End')
-              }
-              .layoutWeight(1)
-            }
-            .width('100%')
-            .margin({ top: 20 })
-
-            Row({ space: 20 }) {
-              Column() {
-                Flex({ alignItems: ItemAlign.Baseline }) {
-                  Text().width(30).height(20).backgroundColor(bgColor1)
-                  Text().width(30).height(40).backgroundColor(bgColor2)
-                  Text().width(30).height(30).backgroundColor(bgColor3)
-                }
-                .backgroundColor(bgColor0)
-                .height(50)
-
-                Text('Baseline')
-              }
-              .layoutWeight(1)
-
-              Column() {
-                Flex({ alignItems: ItemAlign.Stretch }) {
-                  Text().width(30).height(20).backgroundColor(bgColor1)
-                  Text().width(30).height(40).backgroundColor(bgColor2)
-                  Text().width(30).height(30).backgroundColor(bgColor3)
-                }
-                .backgroundColor(bgColor0)
-                .height(50)
-
-                Text('Stretch')
-              }
-              .layoutWeight(1)
-            }
-            .width('100%')
-            .margin({ top: 20 })
-          }
+          })
         }
 
         ListItem() {
-          Column() {
-            Text('布局换行').padding(10)
-            Flex({ wrap: FlexWrap.NoWrap }) {
-              Text().width('50%').height(25).backgroundColor(bgColor1)
-              Text().width('50%').height(25).backgroundColor(bgColor2)
-              Text().width('50%').height(25).backgroundColor(bgColor3)
+          TemplateContent({
+            title: '4. Flex交叉轴对齐方式',
+            subtitle: '当前交叉轴对齐方式：',
+            items: this.itemAligns.map(item => item.value),
+            content: () => {
+              this.buildFlexCrossAlign()
+            },
+            onPopupClick: (index: number) => {
+              this.currentItemAlign = this.itemAligns[index]
             }
-            .height(50)
-            .backgroundColor(bgColor0)
-
-            Text('不换行，布局被压缩').fontSize(12)
-
-            Flex({ wrap: FlexWrap.Wrap }) {
-              Text().width('50%').height(25).backgroundColor(bgColor1)
-              Text().width('50%').height(25).backgroundColor(bgColor2)
-              Text().width('50%').height(25).backgroundColor(bgColor3)
-            }
-            .height(50)
-            .backgroundColor(bgColor0)
-            .margin({ top: 20 })
-
-            Text('换行，第三个组件自动换行').fontSize(12)
-
-            Flex({ wrap: FlexWrap.WrapReverse }) {
-              Text().width('50%').height(25).backgroundColor(bgColor1)
-              Text().width('50%').height(25).backgroundColor(bgColor2)
-              Text().width('50%').height(25).backgroundColor(bgColor3)
-            }
-            .height(50)
-            .backgroundColor(bgColor0)
-            .margin({ top: 20 })
-
-            Text('翻转换行，主轴方向翻转').fontSize(12)
-          }
+          })
         }
 
         ListItem() {
-          Column() {
-            Text('布局换列').padding(10)
-            Flex({ direction: FlexDirection.Column, wrap: FlexWrap.NoWrap }) {
-              Text().height('50%').width(100).backgroundColor(bgColor1)
-              Text().height('50%').width(100).backgroundColor(bgColor2)
-              Text().height('50%').width(100).backgroundColor(bgColor3)
+          TemplateContent({
+            title: '5. 布局换行换列',
+            subtitle: '当前换行策略：',
+            items: this.flexWraps.map(item => item.value),
+            content: () => {
+              this.buildFlexWrap()
+            },
+            onPopupClick: (index: number) => {
+              this.currentFlexWrap = this.flexWraps[index]
             }
-            .width('100%')
-            .height(100)
-            .backgroundColor(bgColor0)
-
-            Text('不换列，布局被压缩').fontSize(12)
-
-            Flex({ direction: FlexDirection.Column, wrap: FlexWrap.Wrap }) {
-              Text().height('50%').width(100).backgroundColor(bgColor1)
-              Text().height('50%').width(100).backgroundColor(bgColor2)
-              Text().height('50%').width(100).backgroundColor(bgColor3)
-            }
-            .width('100%')
-            .height(100)
-            .backgroundColor(bgColor0)
-            .margin({ top: 20 })
-
-            Text('换列，第三个组件自动换列').fontSize(12)
-
-            Flex({ direction: FlexDirection.Column, wrap: FlexWrap.WrapReverse }) {
-              Text().height('50%').width(100).backgroundColor(bgColor1)
-              Text().height('50%').width(100).backgroundColor(bgColor2)
-              Text().height('50%').width(100).backgroundColor(bgColor3)
-            }
-            .width('100%')
-            .height(100)
-            .backgroundColor(bgColor0)
-            .margin({ top: 20 })
-
-            Text('翻转换列，主轴方向翻转').fontSize(12)
-          }
+          })
         }
+
+        ListItem() {
+          TemplateContent({
+            title: '6. 布局换行换列',
+            subtitle: '当前换行策略：',
+            items: this.flexWraps.map(item => item.value),
+            content: () => {
+              this.buildFlexWrap()
+            },
+            onPopupClick: (index: number) => {
+              this.currentFlexWrap = this.flexWraps[index]
+            }
+          })
+        }
+
 
         ListItem() {
           Column() {
@@ -390,13 +283,131 @@ struct UI_Flex {
   }
 
   @Builder
-  directionPopItems() {
+  buildRowPreview() {
+    buildRow({
+      itemWidth: '40%',
+      itemHeight: 30,
+      width: '100%',
+      height: 40
+    })
+  }
+
+  @Builder
+  buildFlexPreview() {
+    buildFlex({
+      itemWidth: '40%',
+      itemHeight: 30,
+      width: '100%',
+      height: 40
+    })
+  }
+
+  @Builder
+  buildFlexDirection() {
+    buildFlex({
+      itemWidth: '40%',
+      itemHeight: 30,
+      width: '100%',
+      height: 120,
+      direction: this.currentFlexDirection.direction
+    })
+  }
+
+  /**
+   * Flex交叉轴对齐方式
+   */
+  @Builder
+  buildFlexCrossAlign() {
+    Column() {
+      Text() {
+        Span('更换')
+          .fontColor(Color.Blue)
+          .decoration({
+            type: TextDecorationType.Underline,
+            color: Color.Blue
+          })
+          .onClick(() => {
+            this.isCrossDirectionPopShow = true
+          })
+        Span(`当前排列方向：${this.currentCrossFlexDirection.value}`)
+      }
+      .padding(10)
+      .width('100%')
+      .bindPopup($$this.isCrossDirectionPopShow, {
+        builder: () => {
+          this.directionPopItems((item) => {
+            this.currentCrossFlexDirection = item
+            this.isCrossDirectionPopShow = false
+          })
+        },
+        onStateChange: (event => {
+          this.isCrossDirectionPopShow = event.isVisible
+        })
+      })
+
+      buildFlex({
+        itemWidth: 80,
+        itemHeight: 20,
+        itemHeight2: 50,
+        itemHeight3: 40,
+        width: '100%',
+        height: 140,
+        direction: this.currentCrossFlexDirection.direction,
+        alignItems: this.currentItemAlign.itemAlign
+      })
+    }
+  }
+
+  /**
+   * 布局换行
+   */
+  @Builder
+  buildFlexWrap() {
+    Column() {
+      Text() {
+        Span('更换')
+          .fontColor(Color.Blue)
+          .decoration({
+            type: TextDecorationType.Underline,
+            color: Color.Blue
+          })
+          .onClick(() => {
+            this.isWrapPopShow = true
+          })
+        Span(`当前排列方向：${this.currentWrapDirection.value}`)
+      }
+      .padding(10)
+      .width('100%')
+      .bindPopup($$this.isWrapPopShow, {
+        builder: () => {
+          this.directionPopItems((item) => {
+            this.currentWrapDirection = item
+            this.isWrapPopShow = false
+          })
+        },
+        onStateChange: (event => {
+          this.isWrapPopShow = event.isVisible
+        })
+      })
+
+      buildFlex({
+        itemWidth: '45%',
+        itemHeight: 60,
+        width: '100%',
+        height: 140,
+        direction: this.currentWrapDirection.direction,
+        wrap: this.currentFlexWrap.flexWrap
+      })
+    }
+  }
+
+  @Builder
+  directionPopItems(onClick: (item: FlexDirectionItem) => void) {
     Column() {
       ForEach(this.directions, (item: FlexDirectionItem) => {
         Text(item.value).width('50%').height(30)
           .onClick(() => {
-            this.flexDirection = item
-            this.isDirectionPopShow = false
+            onClick(item)
           })
       })
     }
@@ -404,7 +415,3 @@ struct UI_Flex {
   }
 }
 
-interface FlexDirectionItem {
-  direction: FlexDirection
-  value: string
-}
