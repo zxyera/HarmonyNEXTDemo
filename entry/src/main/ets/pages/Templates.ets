@@ -1,5 +1,5 @@
 import { bgColor0, bgColor1, bgColor2, bgColor3 } from "../data/Colors"
-import { LengthMetrics } from "@kit.ArkUI"
+import { LengthMetrics, router } from "@kit.ArkUI"
 import { FlexParams, SizeParams } from "../data/BuilderParams"
 
 @Builder
@@ -20,9 +20,14 @@ export function subtitleText(title: string) {
     .padding({ top: 10, bottom: 10 })
 }
 
+@Builder
+export function temp() {
+
+}
+
 @Component
 export struct TemplateContent {
-  @BuilderParam content: () => void
+  @BuilderParam content: () => void = temp
   title?: string
   subtitle?: string
   items: string[] = []
@@ -160,17 +165,9 @@ export struct UpdateLineTextTemplate {
 @Builder
 export function buildRow(params: SizeParams) {
   Row({ space: params.space }) {
-    Text('1').width(params.itemWidth).height(params.itemHeight).backgroundColor(bgColor1).fontSize(8)
-    Text('2')
-      .width(params.itemWidth2 ?? params.itemWidth)
-      .height(params.itemHeight3 ?? params.itemHeight)
-      .backgroundColor(bgColor2)
-      .fontSize(8)
-    Text('3')
-      .width(params.itemWidth3 ?? params.itemWidth)
-      .height(params.itemHeight3 ?? params.itemHeight)
-      .backgroundColor(bgColor3)
-      .fontSize(8)
+    box1(params)
+    box2(params)
+    box3(params)
   }
   .width(params.width)
   .height(params.height)
@@ -182,19 +179,38 @@ export function buildRow(params: SizeParams) {
 }
 
 @Builder
+export function box1(params: SizeParams | FlexParams) {
+  box('1', bgColor1, 8, params.itemWidth, params.itemHeight)
+}
+
+@Builder
+export function box2(params: SizeParams | FlexParams) {
+  box('2', bgColor3, 8, params.itemWidth2 ?? params.itemWidth, params.itemHeight2 ?? params.itemHeight)
+}
+
+@Builder
+export function box3(params: SizeParams | FlexParams) {
+  box('3', bgColor2, 8, params.itemWidth3 ?? params.itemWidth, params.itemHeight3 ?? params.itemHeight)
+}
+
+@Builder
+export function box(text: string, bgColor: ResourceColor, fontSize: number | string | Resource, width: Length,
+  height: Length) {
+  Text(text)
+    .width(width)
+    .height(height)
+    .backgroundColor(bgColor)
+    .opacity(0.5)
+    .fontSize(fontSize)
+    .textAlign(TextAlign.Center)
+}
+
+@Builder
 export function buildColumn(params: SizeParams) {
   Column({ space: params.space }) {
-    Text('1').width(params.itemWidth).height(params.itemHeight).backgroundColor(bgColor1).fontSize(8)
-    Text('2')
-      .width(params.itemWidth2 ?? params.itemWidth)
-      .height(params.itemHeight2 ?? params.itemHeight)
-      .backgroundColor(bgColor2)
-      .fontSize(8)
-    Text('3')
-      .width(params.itemWidth3 ?? params.itemWidth)
-      .height(params.itemHeight3 ?? params.itemHeight)
-      .backgroundColor(bgColor3)
-      .fontSize(8)
+    box1(params)
+    box2(params)
+    box3(params)
   }
   .width(params.width)
   .height(params.height)
@@ -218,17 +234,9 @@ export function buildFlex(params: FlexParams) {
       cross: LengthMetrics.vp(params.crossSpace ?? 0)
     }
   }) {
-    Text('1').width(params.itemWidth).height(params.itemHeight).backgroundColor(bgColor1).fontSize(8)
-    Text('2')
-      .width(params.itemWidth2 ?? params.itemWidth)
-      .height(params.itemHeight2 ?? params.itemHeight)
-      .backgroundColor(bgColor2)
-      .fontSize(8)
-    Text('3')
-      .width(params.itemWidth3 ?? params.itemWidth)
-      .height(params.itemHeight3 ?? params.itemHeight)
-      .backgroundColor(bgColor3)
-      .fontSize(8)
+    box1(params)
+    box2(params)
+    box3(params)
   }
   .width(params.width)
   .height(params.height)

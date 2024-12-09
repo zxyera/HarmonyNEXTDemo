@@ -3,7 +3,7 @@ import { router } from "@kit.ArkUI"
 @Component
 @Preview
 export struct TitleBar {
-  title: string = '123'
+  title: string = ''
 
   build() {
     Row() {
