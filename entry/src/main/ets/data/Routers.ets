@@ -53,3 +53,5 @@ export const Router_UI_TimePicker = 'pages/ui/UI_TimePicker'
 export const Router_UI_Toggle = 'pages/ui/UI_Toggle'
 
 export const Router_UI_Select = 'pages/ui/UI_Select'
+
+export const Router_UI_ColumnSplit_RowSplit = 'pages/ui/UI_ColumnRowSplit'

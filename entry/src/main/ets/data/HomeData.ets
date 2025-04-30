@@ -1,6 +1,7 @@
 import {
   Router_UI_Button,
   Router_UI_CheckBox,
+  Router_UI_ColumnSplit_RowSplit,
   Router_UI_CommonAttrs,
   Router_UI_CommonEvents,
   Router_UI_DatePicker,
@@ -68,6 +69,7 @@ export const HomeData: HomeDataItem[] = [
       { name: '层叠布局Stack', route: Router_UI_Stack },
       { name: '栅格布局GridRow/GridCol', route: Router_UI_GridRowGridCol },
       { name: '相对布局RelativeContainer', route: Router_UI_RelativeContainer },
+      { name: '分栏ColumnSplit/RowSplit', route: Router_UI_ColumnSplit_RowSplit },
     ]
   },
   {

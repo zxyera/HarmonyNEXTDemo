@@ -28,6 +28,7 @@
     "pages/ui/UI_TextTimer",
     "pages/ui/UI_TimePicker",
     "pages/ui/UI_Toggle",
-    "pages/ui/UI_Select"
+    "pages/ui/UI_Select",
+    "pages/ui/UI_ColumnRowSplit"
   ]
 }
